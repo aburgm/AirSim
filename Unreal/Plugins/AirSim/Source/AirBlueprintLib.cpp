@@ -12,7 +12,6 @@
 #include "EngineUtils.h"
 #include "Runtime/Landscape/Classes/LandscapeComponent.h"
 #include "UObjectIterator.h"
-//#include "Runtime/Foliage/Public/FoliageType.h"
 #include "Kismet/KismetStringLibrary.h"
 #include "MessageDialog.h"
 #include "Engine/Engine.h"
