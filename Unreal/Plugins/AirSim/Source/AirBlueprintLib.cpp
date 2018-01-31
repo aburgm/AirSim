@@ -11,6 +11,7 @@
 #include "Components/StaticMeshComponent.h"
 #include "EngineUtils.h"
 #include "Runtime/Landscape/Classes/LandscapeComponent.h"
+#include "Runtime/Engine/Classes/Engine/StaticMesh.h"
 #include "UObjectIterator.h"
 #include "Kismet/KismetStringLibrary.h"
 #include "MessageDialog.h"
@@ -211,15 +212,18 @@ void UAirBlueprintLib::SetObjectStencilID(ALandscapeProxy* mesh, int object_id)
 template<class T>
 std::string UAirBlueprintLib::GetMeshName(T* mesh)
 {
-    if (mesh->GetOwner())
-        return std::string(TCHAR_TO_UTF8(*(mesh->GetOwner()->GetName())));
+    UStaticMeshComponent* staticMesh = dynamic_cast<UStaticMeshComponent*>(mesh);
+    if (mesh->GetOwner() && staticMesh && staticMesh->GetStaticMesh())
+        return std::string(TCHAR_TO_UTF8(*(mesh->GetOwner()->GetName()))) + "/" + TCHAR_TO_UTF8(*staticMesh->GetStaticMesh()->GetName());
+    else if (mesh->GetOwner())
+        return std::string(TCHAR_TO_UTF8(*(mesh->GetOwner()->GetName()))) + "/null";
     else
         return ""; // std::string(TCHAR_TO_UTF8(*(UKismetSystemLibrary::GetDisplayName(mesh))));
 }
 
 std::string UAirBlueprintLib::GetMeshName(ALandscapeProxy* mesh)
 {
-    return std::string(TCHAR_TO_UTF8(*(mesh->GetName())));
+    return std::string(TCHAR_TO_UTF8(*(mesh->GetName()))) + "/null";
 }
 
 void UAirBlueprintLib::InitializeMeshStencilIDs()
