@@ -93,6 +93,17 @@ void CarPawnApi::simSetObjectPose(const std::string& actor_name, const msr::airl
     }, true);
 }
 
+msr::airlib::Vector3r CarPawnApi::simGetTerrainHeight(double x, double y) const
+{
+    msr::airlib::Vector3r result;
+
+    UAirBlueprintLib::RunCommandOnGameThread([x, y, &result, this]() {
+        result = pawn_->getTerrainHeight(x, y);
+    }, true);
+
+    return result;
+}
+
 const CarApiBase::CarControls& CarPawnApi::getCarControls() const
 {
     return last_controls_;

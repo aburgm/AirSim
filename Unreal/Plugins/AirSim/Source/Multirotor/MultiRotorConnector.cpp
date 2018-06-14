@@ -285,6 +285,17 @@ void MultiRotorConnector::setActorPose(const std::string& actor_name, const Pose
     }, true);
 }
 
+Vector3r MultiRotorConnector::getTerrainHeight(double x, double y)
+{
+    msr::airlib::Vector3r result;
+
+    UAirBlueprintLib::RunCommandOnGameThread([x, y, &result, this]() {
+        result = wrapper_->getTerrainHeight(x, y);
+    }, true);
+
+    return result;
+}
+
 bool MultiRotorConnector::setSegmentationObjectID(const std::string& mesh_name, int object_id,
     bool is_name_regex)
 {

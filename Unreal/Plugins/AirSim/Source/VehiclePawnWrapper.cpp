@@ -418,3 +418,27 @@ void VehiclePawnWrapper::setActorPose(std::string actor_name, const msr::airlib:
         actor->SetActorLocationAndRotation(location, quat, false, nullptr, ETeleportType::TeleportPhysics);
     }
 }
+
+msr::airlib::Vector3r VehiclePawnWrapper::getTerrainHeight(double x, double y)
+{
+    UWorld* world = pawn_->GetWorld();
+    const FVector start = ned_transform_.toNeuUU(Vector3r(x, y, -2000.f));
+    const FVector end = ned_transform_.toNeuUU(Vector3r(x, y, +2000.f));
+    const ECollisionChannel channel = ECollisionChannel::ECC_Visibility;
+
+    // Only respond to static objects
+    FCollisionQueryParams queryParams;
+    queryParams.MobilityType = EQueryMobilityType::Static;
+
+    FCollisionResponseParams responseParams;
+    responseParams.CollisionResponse.SetAllChannels(ECollisionResponse::ECR_Ignore);
+    responseParams.CollisionResponse.SetResponse(ECollisionChannel::ECC_WorldStatic, ECollisionResponse::ECR_Block);
+
+    FHitResult hitResult;
+    const bool result = world->LineTraceSingleByChannel(hitResult, start, end, channel, queryParams, responseParams);
+    if (!result) {
+        return Vector3r(std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN(), std::numeric_limits<double>::quiet_NaN());
+    }
+
+    return ned_transform_.toNedMeters(hitResult.ImpactPoint);
+}

@@ -474,6 +474,8 @@ class AirSimClientBase:
         return Pose.from_msgpack(pose)
     def simSetObjectPose(self, object_name, pose):
         return self.client.call('simSetObjectPose', object_name, pose)
+    def simGetTerrainHeight(self, x, y):
+        return self.client.call('simGetTerrainHeight', x, y)
 
 
     # camera control

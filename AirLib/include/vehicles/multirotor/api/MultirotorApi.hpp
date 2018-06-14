@@ -272,6 +272,11 @@ public:
         vehicle_->setActorPose(actor_name, pose);
     }
 
+    virtual Vector3r simGetTerrainHeight(double x, double y) const override
+    {
+        return vehicle_->getTerrainHeight(x, y);
+    }
+
     virtual void simSetPose(const Pose& pose, bool ignore_collision) override
     {
         vehicle_->setPose(pose, ignore_collision);

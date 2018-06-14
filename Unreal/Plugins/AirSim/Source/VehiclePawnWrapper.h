@@ -87,6 +87,8 @@ public: //interface
     void setActorPose(std::string actor_name, const msr::airlib::Pose& pose);
     std::string getVehicleConfigName() const;
 
+    msr::airlib::Vector3r getTerrainHeight(double x, double y);
+
     int getRemoteControlID() const;
 
     FVector getUUPosition() const;

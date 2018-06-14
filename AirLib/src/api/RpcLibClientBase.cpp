@@ -198,6 +198,11 @@ void RpcLibClientBase::simSetObjectPose(const std::string& object_name, const Po
     pimpl_->client.call("simSetObjectPose", object_name, RpcLibAdapatorsBase::Pose(pose));
 }
 
+msr::airlib::Vector3r RpcLibClientBase::simGetTerrainHeight(double x, double y)
+{
+    return pimpl_->client.call("simGetTerrainHeight", x, y).as<RpcLibAdapatorsBase::Vector3r>().to();;
+}
+
 }} //namespace
 
 #endif

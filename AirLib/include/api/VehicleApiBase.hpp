@@ -34,6 +34,7 @@ public:
 
     virtual Pose simGetObjectPose(const std::string& object_name) const = 0;
     virtual void simSetObjectPose(const std::string& object_name, const Pose& pose) = 0;
+    virtual Vector3r simGetTerrainHeight(double x, double y) const = 0;
 
     virtual CameraInfo getCameraInfo(int camera_id) const = 0;
     virtual void setCameraOrientation(int camera_id, const Quaternionr& orientation) = 0;

@@ -87,6 +87,13 @@ public:
         unused(pose);
     }
 
+    virtual Vector3r getTerrainHeight(double x, double y) override
+    {
+        unused(x);
+        unused(y);
+        return msr::airlib::Vector3r();
+    }
+
     virtual CameraInfo getCameraInfo(int camera_id) const override
     {
         unused(camera_id);
