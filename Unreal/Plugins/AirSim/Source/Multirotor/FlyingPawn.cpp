@@ -65,8 +65,6 @@ void AFlyingPawn::setupComponentReferences(const std::vector<msr::airlib::AirSim
 
     //UStaticMeshComponent* bodyMesh = UAirBlueprintLib::GetActorComponent<UStaticMeshComponent>(this, TEXT("BodyMesh"));
     USceneComponent* bodyMesh = GetRootComponent();
-    FActorSpawnParameters camera_spawn_params;
-    camera_spawn_params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
 
     // Can't obtain NedTransform from wrapper because it's not initialized yet, so make our own.
     NedTransform transform;
@@ -75,9 +73,10 @@ void AFlyingPawn::setupComponentReferences(const std::vector<msr::airlib::AirSim
     for (const msr::airlib::AirSimSettings::AdditionalCameraSetting& setting : additionalCameras) {
         FVector position = transform.toNeuUU(NedTransform::Vector3r(setting.x, setting.y, setting.z)) - transform.toNeuUU(NedTransform::Vector3r(0.0, 0.0, 0.0));
         FTransform camera_transform(FRotator(setting.pitch, setting.yaw, setting.roll), position, FVector(1., 1., 1.));
-        APIPCamera* camera = GetWorld()->SpawnActor<APIPCamera>(pip_camera_class_, camera_transform, camera_spawn_params);
+        APIPCamera* camera = GetWorld()->SpawnActorDeferred<APIPCamera>(pip_camera_class_, camera_transform, this, NULL, ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn);
         camera->AttachToComponent(bodyMesh, FAttachmentTransformRules::KeepRelativeTransform);
         AdditionalCameras.Add(camera);
+        camera->FinishSpawning(camera_transform);
     }
 
     for (auto i = 0; i < rotor_count; ++i) {
