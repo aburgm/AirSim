@@ -203,6 +203,11 @@ msr::airlib::Vector3r RpcLibClientBase::simGetTerrainHeight(double x, double y)
     return pimpl_->client.call("simGetTerrainHeight", x, y).as<RpcLibAdapatorsBase::Vector3r>().to();;
 }
 
+void RpcLibClientBase::simSetObjectVelocity(const std::string& object_name, const Vector3r& velocity)
+{
+    pimpl_->client.call("simSetObjectVelocity", object_name, RpcLibAdapatorsBase::Vector3r(velocity));
+}
+
 }} //namespace
 
 #endif

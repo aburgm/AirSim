@@ -64,6 +64,8 @@ public:
     virtual Pose getActorPose(const std::string& actor_name) override;
     virtual void setActorPose(const std::string& actor_name, const Pose& pose) override;
     virtual Vector3r getTerrainHeight(double x, double y) override;
+    virtual void setActorVelocity(const std::string& actor_name, const Vector3r& velocity) override;
+
     virtual CameraInfo getCameraInfo(int camera_id) const override;
     virtual void setCameraOrientation(int camera_id, const Quaternionr& orientation) override;
 

@@ -298,6 +298,13 @@ Vector3r MultiRotorConnector::getTerrainHeight(double x, double y)
     return result;
 }
 
+void MultiRotorConnector::setActorVelocity(const std::string& actor_name, const Vector3r& velocity)
+{
+    UAirBlueprintLib::RunCommandOnGameThread([&velocity, &actor_name, this]() {
+        wrapper_->setActorVelocity(actor_name, velocity);
+    }, true);
+}
+
 bool MultiRotorConnector::setSegmentationObjectID(const std::string& mesh_name, int object_id,
     bool is_name_regex)
 {

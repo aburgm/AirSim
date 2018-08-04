@@ -43,6 +43,8 @@ public:
     Pose simGetObjectPose(const std::string& object_name);
     void simSetObjectPose(const std::string& object_name, const Pose& pose);
     Vector3r simGetTerrainHeight(double x, double y);
+    void simSetObjectVelocity(const std::string& object_name, const Vector3r& velocity);
+
     CameraInfo getCameraInfo(int camera_id);
     void setCameraOrientation(int camera_id, const Quaternionr& orientation);
 

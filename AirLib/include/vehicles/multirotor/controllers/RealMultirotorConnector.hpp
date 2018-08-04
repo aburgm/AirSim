@@ -94,6 +94,12 @@ public:
         return msr::airlib::Vector3r();
     }
 
+    virtual void setActorVelocity(const std::string& actor_name, const Vector3r& velocity) override
+    {
+        unused(actor_name);
+        unused(velocity);
+    }
+
     virtual CameraInfo getCameraInfo(int camera_id) const override
     {
         unused(camera_id);

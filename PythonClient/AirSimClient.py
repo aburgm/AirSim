@@ -476,6 +476,8 @@ class AirSimClientBase:
         return self.client.call('simSetObjectPose', object_name, pose)
     def simGetTerrainHeight(self, x, y):
         return self.client.call('simGetTerrainHeight', x, y)
+    def simSetObjectVelocity(self, object_name, velocity):
+        return self.client.call('simSetObjectVelocity', object_name, velocity)
 
 
     # camera control

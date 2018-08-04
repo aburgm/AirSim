@@ -86,6 +86,7 @@ public: //interface
     msr::airlib::Pose getActorPose(std::string actor_name);
     void setActorPose(std::string actor_name, const msr::airlib::Pose& pose);
     std::string getVehicleConfigName() const;
+    void setActorVelocity(std::string actor_name, const msr::airlib::Vector3r& velocity);
 
     msr::airlib::Vector3r getTerrainHeight(double x, double y);
 

@@ -49,6 +49,8 @@ public:
     virtual msr::airlib::Pose simGetObjectPose(const std::string& actor_name) const override;
     virtual void simSetObjectPose(const std::string& actor_name, const msr::airlib::Pose& pose) override;
     virtual msr::airlib::Vector3r simGetTerrainHeight(double x, double y) const override;
+    virtual void simSetObjectVelocity(const std::string& actor_name, const msr::airlib::Vector3r& velocity) override;
+
     virtual msr::airlib::CameraInfo getCameraInfo(int camera_id) const override;
     virtual void setCameraOrientation(int camera_id, const msr::airlib::Quaternionr& orientation) override;
 

@@ -277,6 +277,11 @@ public:
         return vehicle_->getTerrainHeight(x, y);
     }
 
+    virtual void simSetObjectVelocity(const std::string& actor_name, const Vector3r& velocity) override
+    {
+        vehicle_->setActorVelocity(actor_name, velocity);
+    }
+
     virtual void simSetPose(const Pose& pose, bool ignore_collision) override
     {
         vehicle_->setPose(pose, ignore_collision);

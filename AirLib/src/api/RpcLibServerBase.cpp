@@ -130,6 +130,10 @@ RpcLibServerBase::RpcLibServerBase(SimModeApiBase* simmode_api, string server_ad
         return RpcLibAdapatorsBase::Vector3r(getVehicleApi()->simGetTerrainHeight(x, y));
     });
     
+    pimpl_->server.bind("simSetObjectVelocity", [&](const std::string& object_name, const RpcLibAdapatorsBase::Vector3r &vector) {
+        getVehicleApi()->simSetObjectVelocity(object_name, vector.to());
+    });
+
     pimpl_->server.bind("simPause", [&](bool is_paused) -> void { 
         getSimModeApi()->pause(is_paused); 
     });

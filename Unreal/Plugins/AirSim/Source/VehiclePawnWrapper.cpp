@@ -442,3 +442,24 @@ msr::airlib::Vector3r VehiclePawnWrapper::getTerrainHeight(double x, double y)
 
     return ned_transform_.toNedMeters(hitResult.ImpactPoint);
 }
+
+void VehiclePawnWrapper::setActorVelocity(std::string actor_name, const msr::airlib::Vector3r& velocity)
+{
+    AActor* actor = UAirBlueprintLib::FindActor<AActor>(pawn_, FString(actor_name.c_str()));
+    if (actor)
+    {
+        FVector velocityNeuUU = ned_transform_.toNeuUU(velocity) - ned_transform_.toNeuUU(Vector3r(0, 0, 0));
+
+        // TODO: Cast to PrimitiveComponent and if Physics enabled, use the SetPhysicsLinearVelocity function.
+        UPrimitiveComponent* comp = dynamic_cast<UPrimitiveComponent*>(actor->GetRootComponent());
+        if (comp) {
+                comp->SetSimulatePhysics(true);
+                comp->SetEnableGravity(false);
+                comp->SetPhysicsLinearVelocity(velocityNeuUU);
+                comp->SetPhysicsAngularVelocity(FVector(0., 0., 0.)); // Just so it recovers from collision if any
+        } else {
+                actor->GetRootComponent()->ComponentVelocity = velocityNeuUU;
+        }
+    }
+}
+
